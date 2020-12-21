@@ -39,10 +39,19 @@ function distance(
   var dLon = degreesToRadians(coordinates2[0] - coordinates1[0]);
   var lat1 = degreesToRadians(coordinates1[1]);
   var lat2 = degreesToRadians(coordinates2[1]);
-
+  
+  var latAdj = 0;
+  var lonAdj = 0;
+    
+  if (dLat > Math.PI) {
+    latAdj = 1;
+  }
+  if (dLon > Math.PI) {
+    lonAdj = 1;
+  }
   var a =
-    Math.pow(Math.sin(dLat / 2), 2) +
-    Math.pow(Math.sin(dLon / 2), 2) * Math.cos(lat1) * Math.cos(lat2);
+    Math.pow(Math.sin(dLat / 2) + latAdj, 2) +
+    Math.pow(Math.sin(dLon / 2) + lonAdj, 2) * Math.cos(lat1) * Math.cos(lat2);
 
   return radiansToLength(
     2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)),
